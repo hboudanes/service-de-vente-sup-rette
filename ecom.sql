@@ -98,12 +98,14 @@ CREATE TABLE IF NOT EXISTS `pay` (
   `ID_pay` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `Num_cart` int(25) unsigned NOT NULL,
   `prix_T` int(25) unsigned NOT NULL,
-  `Date_exp` int(11) unsigned NOT NULL,
+  `Date_exp` date NOT NULL,
+  `nom_cart` char(50) NOT NULL,
+  `cvv` int(11) unsigned NOT NULL,
   `ID_client` int(11) unsigned NOT NULL,
   PRIMARY KEY (`ID_pay`),
   KEY `ID_client` (`ID_client`),
   CONSTRAINT `FK__client` FOREIGN KEY (`ID_client`) REFERENCES `client` (`id_client`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 -- Data exporting was unselected.
 
