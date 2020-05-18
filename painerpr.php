@@ -8,6 +8,7 @@ if (!$result) {
 ?>
 <?php
 $t=0;
+$r=0;
 if ($result->num_rows > 0) {
   // output data of each row
   while($row = $result->fetch_assoc()) {
@@ -15,13 +16,18 @@ if ($result->num_rows > 0) {
       $tr1[$t] =$row["ID_com"];
       $t++;
     }
+    if ($row["pay"] == 0) {
+    
+   
      $painer = "SELECT * FROM panier_fixe where ID_panier =" . $row["id_pan"];
      $resr = $conn->query($painer); //mysqli($conn,$pro)
-     if (!$resr) {
+     if (!$resr ) {
       
      }else{
       
      while($row1 = $resr->fetch_assoc()){
+      $prixpn[$r]=$row1["prix"];
+      $r++;
         echo "<?php include('close.php') ?>
         <div class='container'>
                 <div class='row'>
@@ -71,11 +77,12 @@ if ($result->num_rows > 0) {
             <h6 class='cor'>DHS</h6>
         </div>
     </div> ";
+    
         }
-           
-     }
-     }
      
+     }
+     }
+    }
  }
  else {
    echo "0 results";

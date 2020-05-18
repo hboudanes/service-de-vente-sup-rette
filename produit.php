@@ -21,7 +21,7 @@ if ($result->num_rows > 0) { //num_rows() checks if there are more than zero row
     //  echo "ID_com: " . $row["ID_com"]. " date " . $row["date_com"]. " id-pro " . $row["id_pro"]. "<br>";
      $prod = "SELECT * FROM produit where id_pro ="  . $row["id_pro"] ;
      $res = $conn->query($prod); //mysqli($conn,$pro)
-     if ($res) {
+     if ($res && $row["pay"] == 0) {
        
       while($r = $res->fetch_assoc()){ 
         echo

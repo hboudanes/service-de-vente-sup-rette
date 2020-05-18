@@ -83,7 +83,7 @@ session_start();
     <div class="container mt-4">
         <div class="totale row ">
             <button type="button" class="btn btn-outline-secondary mr-1">SUIVRE VOS ACHATS</button>
-            <button type="button" class="btn btn-primary" herf="finalise.php">COMMANDE</button>
+            <button type="button" class="btn btn-primary"  onclick="window.location.href='finalise.php'" >COMMANDE</button>
             <div class="col-3"></div>
         </div>
     </div>
@@ -100,11 +100,11 @@ session_start();
 // Set session variables
 $_SESSION['painer']=$tr1;
  $_SESSION['prod']=$tr;
+$_SESSION['prixpn']=  $prixpn;
 $_SESSION['totalep']=$totalpp;
 ?>
 <?php
- print_r($tr);
- print_r($tr1);
+
  include("close.php");
 
   ?>

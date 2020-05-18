@@ -123,9 +123,28 @@ span.price {
   <body>
   <h2>Finalise votre commande</h2>
 <div class="row">
+<div class="col-25">
+    <div class="container">
+      <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
+      <?php
+       $x=0;
+       echo  "<p><a href='#'>painer </a> <span class='price'>" . $_SESSION['totalep'] . "DH" . "</span></p>";
+       for ($t=0; $t <count($_SESSION['prixpn']) ; $t++) { 
+        echo  "<p><a href='#'>painer </a> <span class='price'>" .$_SESSION['prixpn'][$t] . "DH" . "</span></p>";
+        $x+=$_SESSION['prixpn'][$t];
+       }       
+       $tt=$_SESSION['totalep']+$x;
+   ?>
+      
+      
+      <hr>
+      <p>Total <span class="price" style="color:black"><b><?php echo $_SESSION['totalep'] + $x . "DH" ?></b></span></p>
+
+    </div>
+  </div>
   <div class="col-75">
     <div class="container">
-      <form action="/action_page.php">
+      <form method="GET" action="pay.php">
       
         <div class="row">
           
@@ -152,6 +171,7 @@ span.price {
               <div class="col-50">
                 <label for="cvv">CVV</label>
                 <input type="text" id="cvv" name="cvv" placeholder="352">
+                <input type="text" id="cvv" name="prixt" value="<?php echo $tt ?>">
               </div>
             </div>
           </div>
@@ -164,20 +184,7 @@ span.price {
       </form>
     </div>
   </div>
-  <div class="col-25">
-    <div class="container">
-      <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
-      <?php
-      
-       echo  "<p><a href='#'>painer </a> <span class='price'>" . $_SESSION['totalep'] . "DH" . "</span></p>"
-              
-?>
-      
-      <p><a href="#">painer</a> <span class="price">$5</span></p>
-      <hr>
-      <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
-    </div>
-  </div>
+  
 </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
