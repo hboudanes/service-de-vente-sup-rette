@@ -40,16 +40,17 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
 
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
+        <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">chri hani</a>
+                <a class="navbar-brand" href="homepage.php">chri hani</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -63,7 +64,7 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
                     <li>
                         <a href="admin">Admin</a>
                     </li>
-                     <li>
+                    <li>
                         <a href="panier.php">checkout</a>
                     </li>
                     <li>
@@ -82,12 +83,12 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
 
         <div class="row">
 
-        <!-- sidebar -->
+            <!-- sidebar -->
 
-        <div class="col-md-3">
-    <p class="lead">Categories</p>
-    <div class="list-group">
-        <?php   
+            <div class="col-md-3">
+                <p class="lead">Categories</p>
+                <div class="list-group">
+                    <?php   
         function query($sql){
             global $connection;
             return mysqli_query($connection, $sql);
@@ -99,98 +100,92 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
             }
         }
         function fetch_array($result){
-            return mysqli_fetch_array($result);
+            return mysqli_fetch_assoc($result);
         }
         function escape_string($string){
             global $connection;
             return mysqli_real_escape_string($connection, $string);
         }
-            function get_categories(){
-                $query = query("SELECT * FROM categories");
+
+                $query = query("SELECT * FROM catégorie");
                 confirm($query);
             
                 while($row= fetch_array($query)){
                     $category = <<<DELIMETER
-                    <a href="category.php?id={$row['cat_id']}" class="list-group-item">{$row['cat_title']}</a>
+                    <a href="category.php?id={$row['id_cat']}" class="list-group-item">{$row['desc']}</a>
                     DELIMETER;
                     echo $category;
                 }
-            }
             
             
         ?>
-    </div>
-</div>
+                </div>
+            </div>
 
 
             <div class="col-md-9">
 
-            <div class="row carousel-holder">
+                <div class="row carousel-holder">
 
-<div class="col-md-12">
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="item active">
-                <img class="slide-image" src="http://placehold.it/800x300" alt="">
-            </div>
-            <div class="item">
-                <img class="slide-image" src="http://placehold.it/800x300" alt="">
-            </div>
-            <div class="item">
-                <img class="slide-image" src="http://placehold.it/800x300" alt="">
-            </div>
-        </div>
-        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
-        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>
-    </div>
-</div>
+                    <div class="col-md-12">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                </div>
+                                <div class="item">
+                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                </div>
+                                <div class="item">
+                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                                </div>
+                            </div>
+                            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
 
-</div>
+                </div>
 
                 <div class="row">
-                <!-- <?php echo $_SESSION["product_1"]; ?>
-                    -->
-
-                    <?php function get_products(){
-    $query = query("SELECT * FROM products");
+                    <?php //echo $_SESSION["product_1"]; 
+    $query = query("SELECT * FROM produit");
     confirm($query);
 
-    while($row = fetch_array($query)){
-        // heredoc /DElIMETER
-        $product = <<<DELIMETER
-            <div class="col-sm-4 col-lg-4 col-md-4">
-                <div class="thumbnail">
-                    <a href="item.php?id={$row['product_id']}"><img width=100 src="../ressources/uploads/{$row['product_image']}" alt=""></a>
-                    <div class="caption">
-                        <h4 class="pull-right">{$row['product_price']} dh</h4>
-                        <h4><a href="item.php?id={$row['product_id']}">{$row['product_title']}</a>
-                        </h4>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum incidunt neque blanditiis eum velit.</p>
-                        <a class="btn btn-primary" target="_blank" href="../ressources/cart.php?add={$row['product_id']}">Chri hani</a>
-                        <a href="item.php?id={$row['product_id']}" class="btn btn-default">More Info</a>
-                    </div>
-                </div>
+    while($row = fetch_array($query)){ ?>
+        <div class="col-sm-4 col-lg-4 col-md-4">
+        <div class="thumbnail">
+            <a href="item.php?id=<?php echo $row['ID_pro'] ?>"><img width=100 src="<?php echo $row['img'] ?>" alt=""></a>
+            <div class="caption">
+                <h4 class="pull-right"><?php echo $row['prix'] ?>dh</h4>
+                <h4><a href="item.php?id={$row['ID_pro']}"><?php echo $row['nom']; ?></a>
+                </h4>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum incidunt neque blanditiis eum velit.</p>
+                <a class="btn btn-primary" target="_blank" href="../ressources/cart.php?add=<?php echo $row['ID_pro']?>">Chri hani</a>
+                <a href="item.php?id=<?php echo $row['ID_pro']?>" class="btn btn-default">More Info</a>
             </div>
-            DELIMETER;
-        echo $product;
-    }
+        </div>
+    </div>
+   <?php
 }?>
 
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <h4><a href="#">Like this Product?</a>
                         </h4>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum incidunt neque blanditiis eum velit accusantium a ea. Fugit natus quis non, rem adipisci est, sunt culpa animi, eius ullam accusamus.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum incidunt neque blanditiis eum
+                            velit accusantium a ea. Fugit natus quis non, rem adipisci est, sunt culpa animi, eius ullam
+                            accusamus.</p>
                         <a class="btn btn-primary" target="_blank" href="">Chri hani</a>
-                    
+
                     </div>
 
                 </div>
@@ -203,26 +198,26 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
     <!-- /.container -->
 
     <div class="container">
-    <hr>
+        <hr>
 
-<!-- Footer -->
-<footer>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Copyright &copy; Your Website 2030</p>
-        </div>
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2030</p>
+                </div>
+            </div>
+        </footer>
+
+
     </div>
-</footer>
+    <!-- /.container -->
 
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
 
-</div>
-<!-- /.container -->
-
-<!-- jQuery -->
-<script src="js/jquery.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
 
 </body>
 
