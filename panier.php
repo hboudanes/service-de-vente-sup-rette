@@ -103,6 +103,11 @@ session_start();
 </html>
 
 <?php
+$tr1 = null;
+$tr = null;
+$prixpn = null;
+$totalpp = null;
+
 // Set session variables
 $_SESSION['painer']=$tr1;
  $_SESSION['prod']=$tr;

@@ -5,7 +5,29 @@ defined("DB_PASS") ? null: define("DB_PASS","root");
 defined("DB_NAME") ? null: define("DB_NAME","ecom");
 defined("DB_PORT") ? null: define("DB_PORT","3307");
 
-$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
+$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); 
+
+
+function query($sql){
+    global $conn;
+    return mysqli_query($conn, $sql);
+}
+function confirm($result){
+    global $conn;
+    if(!$result){
+        die("Query Failed".mysqli_error($conn));
+    }
+}
+function fetch_array($result){
+    return mysqli_fetch_assoc($result);
+}
+function escape_string($string){
+    global $conn;
+    return mysqli_real_escape_string($conn, $string);
+}
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,7 +81,7 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="shop.php">Shop</a>
+                        <a href="categories.php">Shop</a>
                     </li>
                     <li>
                         <a href="login.php">Login</a>
@@ -70,9 +92,7 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
                      <li>
                         <a href="panier.php">checkout</a>
                     </li>
-                    <li>
-                        <a href="contact.php">Contact</a>
-                    </li>
+
 
                 </ul>
             </div>
@@ -96,28 +116,25 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
         <div class="row">
             <div class="col-lg-12">
                 <h3>Latest Products</h3>
-                <!-- <?php get_categories() ?> -->
             </div>
         </div>
         <!-- /.row -->
 
         <!-- Page Features -->
-
         <div class="row text-center">
         <?php 
-        function get_products_in_cat_page(){
-            $query = query("SELECT * FROM products WHERE product_category_id=". escape_string($_GET['id'])." ");
+            $query = query("SELECT * FROM produit WHERE id_ca=". escape_string($_GET['id'])." ");
             confirm($query);
             while($row = fetch_array($query)){
                 $product = <<<DELIMETER
                     <div class="col-md-3 col-sm-6 hero-feature">
                         <div class="thumbnail">
-                            <a href="item.php?id={$row['product_id']}"><img src="{$row['product_image']}" alt=""></a>
+                            <a href="item.php?id={$row['ID_pro']}"><img src="{$row['img']}" alt=""></a>
                             <div class="caption">
-                                <h3>{$row['product_title']}</h3>
+                                <h3>{$row['nom']}</h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                                 <p>
-                                    <a href="#" class="btn btn-primary">Buy Now!</a> <a href="item.php?id={$row['product_id']}" class="btn btn-default">More Info</a>
+                                    <a href="#" class="btn btn-primary">Buy Now!</a> <a href="item.php?id={$row['ID_pro']}" class="btn btn-default">More Info</a>
                                 </p>
                             </div>
                         </div>
@@ -126,7 +143,6 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
         
                 echo $product;
             }
-        }
         ?>
 
         </div>

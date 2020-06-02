@@ -5,7 +5,7 @@ defined("DB_PASS") ? null: define("DB_PASS","root");
 defined("DB_NAME") ? null: define("DB_NAME","ecom");
 defined("DB_PORT") ? null: define("DB_PORT","3307");
 
-$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
+$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -90,21 +90,21 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
                 <div class="list-group">
                     <?php   
         function query($sql){
-            global $connection;
-            return mysqli_query($connection, $sql);
+            global $conn;
+            return mysqli_query($conn, $sql);
         }
         function confirm($result){
-            global $connection;
+            global $conn;
             if(!$result){
-                die("Query Failed".mysqli_error($connection));
+                die("Query Failed".mysqli_error($conn));
             }
         }
         function fetch_array($result){
             return mysqli_fetch_assoc($result);
         }
         function escape_string($string){
-            global $connection;
-            return mysqli_real_escape_string($connection, $string);
+            global $conn;
+            return mysqli_real_escape_string($conn, $string);
         }
 
                 $query = query("SELECT * FROM catégorie");
@@ -112,7 +112,7 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
             
                 while($row= fetch_array($query)){
                     $category = <<<DELIMETER
-                    <a href="category.php?id={$row['id_cat']}" class="list-group-item">{$row['desc']}</a>
+                    <a href="categories.php?id={$row['id_cat']}" class="list-group-item">{$row['desc']}</a>
                     DELIMETER;
                     echo $category;
                 }
@@ -170,8 +170,9 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
                 <h4><a href="item.php?id={$row['ID_pro']}"><?php echo $row['nom']; ?></a>
                 </h4>
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum incidunt neque blanditiis eum velit.</p>
-                <a class="btn btn-primary" target="_blank" href="../ressources/cart.php?add=<?php echo $row['ID_pro']?>">Chri hani</a>
+                <a class="btn btn-primary" target="_blank" href="panier.php?add=<?php echo $row['ID_pro']?>">Chri hani</a>
                 <a href="item.php?id=<?php echo $row['ID_pro']?>" class="btn btn-default">More Info</a>
+
             </div>
         </div>
     </div>
