@@ -1,5 +1,11 @@
-	
-<?php include("server.php"); ?>
+<?php defined("DB_HOST") ? null: define("DB_HOST","localhost");
+defined("DB_USER") ? null: define("DB_USER","root");
+
+defined("DB_PASS") ? null: define("DB_PASS","root");
+defined("DB_NAME") ? null: define("DB_NAME","ecom");
+defined("DB_PORT") ? null: define("DB_PORT","3307");
+
+$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); ?>
 <?php
 // Start the session
 session_start();
