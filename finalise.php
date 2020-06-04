@@ -3,6 +3,7 @@
 // Start the session
 session_start();
 ?>
+<?php include("server.php"); ?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -136,7 +137,7 @@ span.price {
        $tt=$_SESSION['totalep']+$x;
    ?>
       
-      
+      //
       <hr>
       <p>Total <span class="price" style="color:black"><b><?php echo $_SESSION['totalep'] + $x . "DH" ?></b></span></p>
 

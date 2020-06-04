@@ -1,77 +1,69 @@
-<?php defined("DB_HOST") ? null: define("DB_HOST","localhost");
-defined("DB_USER") ? null: define("DB_USER","root");
-
-defined("DB_PASS") ? null: define("DB_PASS","root");
-defined("DB_NAME") ? null: define("DB_NAME","ecom");
-defined("DB_PORT") ? null: define("DB_PORT","3307");
-
-$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT); 
-?>
-
-<?php
-$comd = "SELECT * FROM commande ";
-$result = mysqli_query($conn,$comd); //mysqli($conn,$pro)
-if (!$result) {
-  echo 'error in query';
+<?php include('server.php')?>
+<?php 
+$pro = "SELECT * FROM produit";
+$resultpro = $conn->query($pro);
+// http://localhost/brief10/gestion.php?prixmin=&prixmax=123&categorie=fruit Search
+if (isset($_GET['prixmin'])){
+    $min=$_GET['prixmin'];
+}else{
+    $min=0;
 }
-?>
-<?php
-$totalpp=0;
-$i=0;
-if ($result->num_rows > 0) { //num_rows() checks if there are more than zero rows returned.
-  // output data of each row
-  while($row = $result->fetch_assoc()) {
-    
-     
-    if ($row["pay"] == 0 && $row["id_pro"] != null)  {
-      $tr[$i] =$row["ID_com"];
-      $i++;
-    }
-    //  echo "ID_com: " . $row["ID_com"]. " date " . $row["date_com"]. " id-pro " . $row["id_pro"]. "<br>";
-     $prod = "SELECT * FROM produit where id_pro ="  . $row["id_pro"] ;
-     $res = $conn->query($prod); //mysqli($conn,$pro)
-     if ($res && $row["pay"] == 0) {
-       
-      while($r = $res->fetch_assoc()){ 
-        echo
-        "
-        <div class='container'>
-        <div class='row'>
-          <div class='cola col-1 '>
-            <img src='./img/1.jpg' class='img mt-3'>
-          </div>
-          <div class='cola col-5 border-right'>
-            <h6 class=' mt-3 '>" . $r["nom"] ."</h6>
-                <div class='rowc ml-4 mt-3'>
-                <div class='col-4 '><img src='./icon/like.png' class='icon'><a href='#' class='link'>FAVORIS</a> </div>
-                <div class='col-5 '><img src='./icon/bin.png' class='icon'> <a href='suppr.php?id_com=" . $row["ID_com"] ."'' class='link'>SUPPRIMER</a></div>
-                    </div>
-          </div>
-          <div class='cola col-1 cent border-right'>
-            <select class='m-auto border-0'>
-                <option value='1'>1</option>
-                <option value='2'>2</option>
-                <option value='3'>3</option>
-            </select>
-          </div>
-          <div class='cola col-2 cent border-right'>
-              <h6 class='m-auto'>" . $r["prix"] . "DH" . "</h6>
-        </div>
-        <div class='cola col-2 cent cor'>
-            <h6 class='m-auto'></h6>
-      </div>
-        </div>
-      </div>";
-      $totalpp += $r["prix"] ;
-      
-     }
-     
-     }
-     
-     
-  }
- } else {
-   echo "0 results";
- }
+
+if (isset($_GET['prixmax'])){
+    $max=$_GET['prixmax'];
+}
+else{
+    $max=99999999;
+}
+if ($max=="") {
+    $max=99999999;
+}
+if (isset($_GET['categorie'])){
+    $cat=$_GET['categorie'];
+}else{
+    $cat=true;
+}
+if ($cat=="") {
+    $cat=true;
+}
+if (isset($_GET['Search'])){
+    $Search=$_GET['Search'];
+}else{
+    $Search=true;
+}
+if ($Search=="") {
+    $Search=true;
+}
  
-?>  
+$re=0;
+if ($resultpro->num_rows > 0 ) {
+    while($rowpro = $resultpro->fetch_assoc()) {
+                       
+        if($rowpro["prix"]<=$max && $rowpro["prix"]>=(int)$min && $rowpro["id_ca"] == $cat && $rowpro["nom"] == $Search  ) {
+        echo "<div class='col-lg-3 offset-lg-1   col-md-5 offset-md-1  col-8 offset-2 pr' >
+        <img src='./image/" . $rowpro["img"] .  "' class='imgpro' alt=''>
+        <h6>" . $rowpro["nom"] .  "</h6>
+        
+        <form action='commande.php' method='POST'>
+        <h5>" . $rowpro["prix"] . "DH" . "</h5>
+        <input type='number' id='qnt' name='qantite' min='0' max='" . $rowpro["Qte"] . "' value='1'>
+        <input type='number' class='d-none' name='id_pro' value='" . $rowpro["ID_pro"] . "'>
+        <button class='btn  btn-primary '  id='but" . $re . "'  type='submit'>P</button>
+         </form>
+      </div>";
+      $re++;
+        }
+       
+    }
+} else {
+  
+}
+if ($re == 0) {
+    echo "<div class='container text-center'><div class='alert alert-primary' role='alert'>
+    Aucun résultat 
+     </div></div>";
+    
+}
+$conn->close();
+
+?>
