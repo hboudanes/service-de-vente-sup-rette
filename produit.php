@@ -39,7 +39,7 @@ $re=0;
 if ($resultpro->num_rows > 0 ) {
     while($rowpro = $resultpro->fetch_assoc()) {
                        
-        if($rowpro["prix"]<=$max && $rowpro["prix"]>=(int)$min && $rowpro["id_ca"] == $cat && $rowpro["nom"] == $Search  ) {
+        if($rowpro["prix"]<=$max && $rowpro["prix"]>=(int)$min && $rowpro["id_ca"] == $cat && $rowpro["nom"] == $Search && $rowpro["visible"]==1  ) {
         echo "<div class='col-lg-3 offset-lg-1   col-md-5 offset-md-1  col-8 offset-2 pr' >
         <img src='./image/" . $rowpro["img"] .  "' class='imgpro' alt=''>
         <h6>" . $rowpro["nom"] .  "</h6>

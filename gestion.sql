@@ -52,9 +52,9 @@ CREATE TABLE IF NOT EXISTS `commande` (
   CONSTRAINT `FK_commande_panier_fixe` FOREIGN KEY (`id_pan`) REFERENCES `panier_fixe` (`ID_panier`),
   CONSTRAINT `FK_commande_produit` FOREIGN KEY (`id_pro`) REFERENCES `produit` (`ID_pro`),
   CONSTRAINT `FK_commande_user` FOREIGN KEY (`id_client`) REFERENCES `user` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table gestion.commande: ~7 rows (approximately)
+-- Dumping data for table gestion.commande: ~8 rows (approximately)
 DELETE FROM `commande`;
 /*!40000 ALTER TABLE `commande` DISABLE KEYS */;
 INSERT INTO `commande` (`ID_com`, `date_com`, `id_pro`, `id_pan`, `id_client`, `pay`, `Qte`) VALUES
@@ -64,7 +64,10 @@ INSERT INTO `commande` (`ID_com`, `date_com`, `id_pro`, `id_pan`, `id_client`, `
 	(38, '2020-05-28', 2, NULL, 3, 0, 19),
 	(39, '2020-05-28', 4, NULL, 3, 0, 4),
 	(40, '2020-05-28', 3, NULL, 3, 0, 1),
-	(45, '2020-05-31', NULL, 2, 3, 0, 1);
+	(45, '2020-05-31', NULL, 2, 3, 0, 1),
+	(51, '2020-06-05', 2, NULL, 23, 0, 1),
+	(52, '2020-06-05', 41, NULL, 23, 0, 1),
+	(53, '2020-06-05', NULL, 1, 23, 0, 1);
 /*!40000 ALTER TABLE `commande` ENABLE KEYS */;
 
 -- Dumping structure for table gestion.panier_fixe
@@ -99,14 +102,17 @@ CREATE TABLE IF NOT EXISTS `pay` (
   PRIMARY KEY (`ID_pay`),
   KEY `ID_client` (`ID_client`),
   CONSTRAINT `FK_pay_user` FOREIGN KEY (`ID_client`) REFERENCES `user` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table gestion.pay: ~1 rows (approximately)
+-- Dumping data for table gestion.pay: ~2 rows (approximately)
 DELETE FROM `pay`;
 /*!40000 ALTER TABLE `pay` DISABLE KEYS */;
 INSERT INTO `pay` (`ID_pay`, `Num_cart`, `prix_T`, `Date_exp`, `nom_cart`, `cvv`, `ID_client`) VALUES
 	(12, 0, 7239, '2020-05-31', '', 0, 3),
-	(118, 4294967295, 7109, '2020-06-02', 'yahia n3im', 123, 3);
+	(118, 4294967295, 7109, '2020-06-02', 'yahia n3im', 123, 3),
+	(119, 4294967295, 7109, '2020-06-04', 'hicham', 123, 3),
+	(120, 4294967295, 154, '2020-06-05', 'hicham12boudanes', 123, 23),
+	(121, 123456789, 7109, '2020-06-09', 'testhichamboudanes', 123, 3);
 /*!40000 ALTER TABLE `pay` ENABLE KEYS */;
 
 -- Dumping structure for table gestion.produit
@@ -124,17 +130,17 @@ CREATE TABLE IF NOT EXISTS `produit` (
   KEY `id_ca` (`id_ca`),
   CONSTRAINT `FK_produit_categorie` FOREIGN KEY (`id_ca`) REFERENCES `categorie` (`id_cat`),
   CONSTRAINT `FK_produit_user` FOREIGN KEY (`id_ad`) REFERENCES `user` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table gestion.produit: ~4 rows (approximately)
+-- Dumping data for table gestion.produit: ~5 rows (approximately)
 DELETE FROM `produit`;
 /*!40000 ALTER TABLE `produit` DISABLE KEYS */;
 INSERT INTO `produit` (`ID_pro`, `nom`, `Qte`, `id_ad`, `id_ca`, `prix`, `img`, `visible`) VALUES
-	(1, 'activia', 125, 2, 1, 3, 'activia.jpg', 1),
-	(2, 'danette', 22, 2, 1, 2, 'danette.jpg', 1),
-	(3, 'tv samsung 4k', 96, 2, 2, 4000, 'tv samsung 4k.jpg', 1),
-	(4, 'orange', 84, 2, 3, 7, 'orange.jpg', 1),
-	(41, 'hichamboudanes ', 40, 1, 2, 22, 'centrale.jpg', 1);
+	(1, 'activia', 123, 2, 1, 3, 'activia.jpg', 1),
+	(2, 'danette', 110, 2, 1, 2, 'danette.jpg', 1),
+	(3, 'tv samsung 4k', 94, 2, 2, 4000, 'tv samsung 4k.jpg', 1),
+	(4, 'orange', 76, 2, 3, 7, 'orange.jpg', 1),
+	(41, 'hichamboudanes ', 39, 1, 2, 22, 'centrale.jpg', 0);
 /*!40000 ALTER TABLE `produit` ENABLE KEYS */;
 
 -- Dumping structure for table gestion.produitpn
@@ -188,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id_user`) USING BTREE,
   KEY `id_role` (`idrole`) USING BTREE,
   CONSTRAINT `FK_user_role` FOREIGN KEY (`idrole`) REFERENCES `role` (`id_role`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table gestion.user: ~3 rows (approximately)
 DELETE FROM `user`;
@@ -196,7 +202,8 @@ DELETE FROM `user`;
 INSERT INTO `user` (`id_user`, `username`, `email`, `pass`, `idrole`) VALUES
 	(1, 'hichamboudanes', 'hicham.boudanes@gmail.com', '1234567', 1),
 	(2, 'nourdine', 'nourdine@gmail.com', '123456', 2),
-	(3, 'hicham', 'hicham@boudanes.com', '123456', 3);
+	(3, 'hicham', 'hicham@boudanes.com', '123456', 3),
+	(23, 'hicham1', 'hicham.boudanes@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 3);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

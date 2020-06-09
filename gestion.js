@@ -23,7 +23,7 @@ window.onclick = function(event) {
     var c = document.getElementById('connecte').innerHTML;
     var l = document.getElementById('prod').innerHTML;
     console.log(l)
-    if (c=="Connexion"){
+    if (c=="login"){
         for (let i = 0; i < parseInt(l); i++) {
             document.getElementById("but" +i+ "").disabled = true;
         }

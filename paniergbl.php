@@ -74,8 +74,12 @@ if(!isset($_SESSION['iduser'])){
 <div class='container mt-5'>
 <div class=' mt-5 rowc  '>
             <h6 >Total TTC:</h6>
+           
+             
+              
+            <h6 class='cor ml-5'><?php if(isset($totalepro)){ echo $totalepro;}else{} ?></h6>
+
             
-            <h6 class='cor ml-5'><?php echo $totalepro;?></h6>
             <h6 class='cor'>DHS</h6>
         </div>
 </div>
@@ -84,7 +88,7 @@ if(!isset($_SESSION['iduser'])){
         <div class=" mt-5 rowc  ">
             <h6 >Total TTC:</h6>
             
-            <h6 class="cor ml-5"><?php echo $totalepro+array_sum($totalepani);?></h6>
+            <h6 class="cor ml-5"><?php if(isset($totalepro) && isset($totalepani)){ echo $totalepro+array_sum($totalepani);}else{} ?></h6></h6>
             <h6 class="cor">DHS</h6>
         </div>
     </div>
@@ -142,6 +146,9 @@ if(!isset($_SESSION['iduser'])){
   </body>
 </html>    
 <?php
-$_SESSION['totalep']=$totalepro;
-$_SESSION['prixpn']=$totalepani;
+if(isset($totalepro) && isset($totalepani)){
+  $_SESSION['totalep']=$totalepro;
+  $_SESSION['prixpn']=$totalepani;
+}
+
 ?>

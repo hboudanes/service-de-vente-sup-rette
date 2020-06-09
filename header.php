@@ -26,11 +26,11 @@ include ('server1.php');?>
               <a class="nav-link" href="paniergbl.php">Painer</a>
             </li>
             <li class="nav-item">
-            <a href="#" class="nav-link"> <span class="glyphicon glyphicon-user"></span> <?php   if( isset($_SESSION['username'])){
+            <a href="#" class="nav-link" > <span class="glyphicon glyphicon-user"></span> <?php   if( isset($_SESSION['username'])){
               echo $_SESSION['username'];
           
             }else{
-              echo   " <li class='nav-item'><a class='nav-link' href='login.php' >login</a> </li>";
+              echo   " <li class='nav-item' ><a class='nav-link' href='login.php' id='connecte' >login</a> </li>";
             }; ?>  </a>
       
             </li>
