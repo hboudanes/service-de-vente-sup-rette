@@ -146,8 +146,11 @@ if(!isset($_SESSION['iduser'])){
   </body>
 </html>    
 <?php
-if(isset($totalepro) && isset($totalepani)){
+if(isset($totalepro)){
   $_SESSION['totalep']=$totalepro;
+
+}
+if (isset($totalepani)) {
   $_SESSION['prixpn']=$totalepani;
 }
 

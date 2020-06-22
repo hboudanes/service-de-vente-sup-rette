@@ -129,17 +129,23 @@ span.price {
       <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
       <?php
        $x=0;
+      
        echo  "<p><a href='#'>painer </a> <span class='price'>" . $_SESSION['totalep'] . "DH" . "</span></p>";
+      if(isset($_SESSION['prixpn'])){
        for ($t=0; $t <count($_SESSION['prixpn']) ; $t++) { 
         echo  "<p><a href='#'>painer </a> <span class='price'>" .$_SESSION['prixpn'][$t] . "DH" . "</span></p>";
         $x+=$_SESSION['prixpn'][$t];
        }       
        $tt=$_SESSION['totalep']+$x;
+      }else{
+        $tt=$_SESSION['totalep'];
+      }
+       
    ?>
       
       //
       <hr>
-      <p>Total <span class="price" style="color:black"><b><?php echo $_SESSION['totalep'] + $x . "DH" ?></b></span></p>
+      <p>Total <span class="price" style="color:black"><b><?php echo $tt . "DH" ?></b></span></p>
 
     </div>
   </div>
